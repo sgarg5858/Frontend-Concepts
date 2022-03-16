@@ -1,0 +1,104 @@
+{
+  "projectType": "application",
+  "root": "apps/content-projection",
+  "sourceRoot": "apps/content-projection/src",
+  "prefix": "angular-concepts-nx",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/content-projection",
+        "index": "apps/content-projection/src/index.html",
+        "main": "apps/content-projection/src/main.ts",
+        "polyfills": "apps/content-projection/src/polyfills.ts",
+        "tsConfig": "apps/content-projection/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/content-projection/src/favicon.ico",
+          "apps/content-projection/src/assets"
+        ],
+        "styles": ["apps/content-projection/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/content-projection/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/content-projection/src/environments/environment.ts",
+              "with": "apps/content-projection/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/content-projection/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "content-projection:build:production"
+        },
+        "development": {
+          "browserTarget": "content-projection:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "content-projection:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/content-projection/src/**/*.ts",
+          "apps/content-projection/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/content-projection"],
+      "options": {
+        "jestConfig": "apps/content-projection/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

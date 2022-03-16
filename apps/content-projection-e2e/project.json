@@ -1,0 +1,28 @@
+{
+  "root": "apps/content-projection-e2e",
+  "sourceRoot": "apps/content-projection-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/content-projection-e2e/cypress.json",
+        "devServerTarget": "content-projection:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "content-projection:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/content-projection-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["content-projection"]
+}

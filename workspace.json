@@ -1,4 +1,16 @@
 {
   "version": 2,
-  "projects": {}
+  "projects": {
+    "attribute-directives": "apps/attribute-directives",
+    "attribute-directives-e2e": "apps/attribute-directives-e2e",
+    "content-projection": "apps/content-projection",
+    "content-projection-e2e": "apps/content-projection-e2e",
+    "content-projection-feature": "libs/content-projection/feature",
+    "ng-template": "apps/ng-template",
+    "ng-template-e2e": "apps/ng-template-e2e",
+    "shell": "apps/shell",
+    "shell-e2e": "apps/shell-e2e",
+    "structural-directives": "apps/structural-directives",
+    "structural-directives-e2e": "apps/structural-directives-e2e"
+  }
 }

@@ -1,0 +1,28 @@
+{
+  "root": "apps/attribute-directives-e2e",
+  "sourceRoot": "apps/attribute-directives-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/attribute-directives-e2e/cypress.json",
+        "devServerTarget": "attribute-directives:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "attribute-directives:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/attribute-directives-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["attribute-directives"]
+}
