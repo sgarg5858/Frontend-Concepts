@@ -1,24 +1,24 @@
 {
   "projectType": "application",
-  "root": "apps/shell",
-  "sourceRoot": "apps/shell/src",
+  "root": "apps/css-grid",
+  "sourceRoot": "apps/css-grid/src",
   "prefix": "angular-concepts-nx",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/shell",
-        "index": "apps/shell/src/index.html",
-        "main": "apps/shell/src/main.ts",
-        "polyfills": "apps/shell/src/polyfills.ts",
-        "tsConfig": "apps/shell/tsconfig.app.json",
+        "outputPath": "dist/apps/css-grid",
+        "index": "apps/css-grid/src/index.html",
+        "main": "apps/css-grid/src/main.ts",
+        "polyfills": "apps/css-grid/src/polyfills.ts",
+        "tsConfig": "apps/css-grid/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
-        "styles": ["apps/shell/src/styles.scss"],
+        "assets": ["apps/css-grid/src/favicon.ico", "apps/css-grid/src/assets"],
+        "styles": ["apps/css-grid/src/styles.scss"],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/shell/webpack.config.js"
+          "path": "apps/css-grid/webpack.config.js"
         }
       },
       "configurations": {
@@ -37,13 +37,13 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/shell/src/environments/environment.ts",
-              "with": "apps/shell/src/environments/environment.prod.ts"
+              "replace": "apps/css-grid/src/environments/environment.ts",
+              "with": "apps/css-grid/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all",
           "customWebpackConfig": {
-            "path": "apps/shell/webpack.prod.config.js"
+            "path": "apps/css-grid/webpack.prod.config.js"
           }
         },
         "development": {
@@ -61,51 +61,39 @@
       "executor": "@nrwl/angular:webpack-server",
       "configurations": {
         "production": {
-          "browserTarget": "shell:build:production"
+          "browserTarget": "css-grid:build:production"
         },
         "development": {
-          "browserTarget": "shell:build:development"
+          "browserTarget": "css-grid:build:development"
         }
       },
       "defaultConfiguration": "development",
       "options": {
-        "publicHost": "http://localhost:4200"
+        "port": 4205,
+        "publicHost": "http://localhost:4205"
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "shell:build"
+        "browserTarget": "css-grid:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "apps/shell/src/**/*.ts",
-          "apps/shell/src/**/*.html"
+          "apps/css-grid/src/**/*.ts",
+          "apps/css-grid/src/**/*.html"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/shell"],
+      "outputs": ["coverage/apps/css-grid"],
       "options": {
-        "jestConfig": "apps/shell/jest.config.js",
+        "jestConfig": "apps/css-grid/jest.config.js",
         "passWithNoTests": true
-      }
-    },
-    "serve-mfe": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "commands": [
-          "nx serve css-grid",
-          "nx serve attribute-directives",
-          "nx serve structural-directives",
-          "nx serve ng-template",
-          "nx serve content-projection",
-          "nx serve shell"
-        ]
       }
     }
   },

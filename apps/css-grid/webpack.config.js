@@ -28,7 +28,7 @@ sharedMappings.register(
 
 module.exports = {
   output: {
-    uniqueName: 'shell',
+    uniqueName: 'css-grid',
     publicPath: 'auto',
   },
   optimization: {
@@ -44,12 +44,10 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      remotes: {
-        'content-projection': 'http://localhost:4201/remoteEntry.js',
-        'ng-template': 'http://localhost:4202/remoteEntry.js',
-        'structural-directives': 'http://localhost:4203/remoteEntry.js',
-        'attribute-directives': 'http://localhost:4204/remoteEntry.js',
-        'css-grid': 'http://localhost:4205/remoteEntry.js',
+      name: 'css-grid',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './Module': 'apps/css-grid/src/app/remote-entry/entry.module.ts',
       },
       shared: share({
         '@angular/core': {

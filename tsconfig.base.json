@@ -17,6 +17,9 @@
     "paths": {
       "@angular-concepts-nx/content-projection/feature": [
         "libs/content-projection/feature/src/index.ts"
+      ],
+      "@angular-concepts-nx/css-grid/feature": [
+        "libs/css-grid/feature/src/index.ts"
       ]
     }
   },

@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/css-grid/feature",
+  "sourceRoot": "libs/css-grid/feature/src",
+  "prefix": "angular-concepts-nx",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/css-grid/feature"],
+      "options": {
+        "jestConfig": "libs/css-grid/feature/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/css-grid/feature/src/**/*.ts",
+          "libs/css-grid/feature/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
