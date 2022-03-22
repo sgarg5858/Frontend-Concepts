@@ -7,3 +7,5 @@ declare module 'structural-directives/Module';
 declare module 'attribute-directives/Module';
 
 declare module 'css-grid/Module';
+
+declare module 'custom-forms/Module';

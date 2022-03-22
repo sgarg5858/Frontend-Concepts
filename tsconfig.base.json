@@ -20,6 +20,15 @@
       ],
       "@angular-concepts-nx/css-grid/feature": [
         "libs/css-grid/feature/src/index.ts"
+      ],
+      "@angular-concepts-nx/custom-forms/feature": [
+        "libs/custom-forms/feature/src/index.ts"
+      ],
+      "@angular-concepts-nx/reusable-forms-1/data-access": [
+        "libs/reusable-forms-1/data-access/src/index.ts"
+      ],
+      "@angular-concepts-nx/reusable-forms-1/feature": [
+        "libs/reusable-forms-1/feature/src/index.ts"
       ]
     }
   },

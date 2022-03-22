@@ -1,0 +1,21 @@
+<div [formGroup]="formGroup">
+    <div>
+        <label [ngClass]="balanceInfo?.balanced ? 'balanced' : 'unbalanced'">{{
+          balanceInfo.balanced ? 'Balanced' : 'UnBalanced'
+        }}</label>
+      </div>
+
+      <div>
+          <p-panel header="Nomination Header">
+              <angular-concepts-nx-nomination-header
+              formControlName="nominationHeader"
+              [isReadOnly]="true">
+            </angular-concepts-nx-nomination-header>
+          </p-panel>
+      </div>
+
+      <angular-concepts-nx-ledger
+      formControlName="ledger"
+      (balanceChanged)="handleBalanceChanged($event)"
+    ></angular-concepts-nx-ledger>
+</div>

@@ -1,0 +1,14 @@
+.layout {
+    display: grid;
+    grid-column: 1 / span 2;
+    grid-template-columns: auto auto;
+  }
+  
+  .total {
+    margin-left: 170px;
+  }
+  .main-layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+  }
+  

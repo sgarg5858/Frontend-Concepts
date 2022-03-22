@@ -1,0 +1,47 @@
+<div [formGroup]="formGroup">
+
+    <div class="step1">
+      <angular-concepts-nx-nomination-create-page1
+        *ngIf="step === 1"
+        formControlName="step1"
+      ></angular-concepts-nx-nomination-create-page1>
+    </div>
+    
+    <div class="step2">
+      <angular-concepts-nx-nomination-create-page2
+        *ngIf="step === 2"
+        formControlName="step2"
+      ></angular-concepts-nx-nomination-create-page2>
+    </div>
+
+    <div class="step3">
+      <angular-concepts-nx-nomination-create-page3 
+      *ngIf=" step === 3 "
+      [receipts]="receipts"
+      [deliveries]="deliveries"
+      formControlName="step3">
+    </angular-concepts-nx-nomination-create-page3>
+    </div>
+
+    <div class="layout">
+      <div class="previous">
+        <button
+          pButton
+          [disabled]="step === 1"
+          type="button"
+          label="Previous"
+          class="p-button-lg"
+          (click)="handlePrevious()"
+        ></button>
+      </div>
+      <div class="next">
+        <button
+          pButton
+          type="button"
+          class="p-button-lg"
+          label="{{ step === 2 ? 'Save' : 'Next' }}"
+          (click)="handleNext()"
+        ></button>
+      </div>
+    </div>
+  </div>

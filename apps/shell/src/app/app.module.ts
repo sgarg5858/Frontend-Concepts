@@ -4,12 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { RouterModule } from '@angular/router';
-import { GridComponent } from './grid/grid.component';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NominationCreatePage3Component } from './nomination-create-page3/nomination-create-page3.component'
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, GridComponent],
+  declarations: [AppComponent, NxWelcomeComponent, NominationCreatePage3Component],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(
       [
         {
@@ -42,6 +43,11 @@ import { GridComponent } from './grid/grid.component';
           path: 'css-grid',
           loadChildren: () =>
             import('css-grid/Module').then((m) => m.RemoteEntryModule),
+        },
+        {
+          path: 'custom-forms',
+          loadChildren: () =>
+            import('custom-forms/Module').then((m) => m.RemoteEntryModule),
         },
       ],
       { initialNavigation: 'enabledBlocking' }

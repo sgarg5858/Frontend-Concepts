@@ -1,0 +1,28 @@
+<div [formGroup]="formGroup">
+    <p-panel header="Nomination Header">
+        <angular-concepts-nx-nomination-header
+        formControlName="nominationHeader"
+        [isReadOnly]="isReadOnly"
+        [vessel]="vesselSelected"
+        (valueChanged)="nominationHeaderChanged($event)"
+        >
+
+        </angular-concepts-nx-nomination-header>
+    </p-panel>
+    <p-panel *ngIf="showMarineDetails">
+        <angular-concepts-nx-marine-details 
+        formControlName="marineDetails"
+        (valueChanged)="vesselChanged($event)"
+        >
+        </angular-concepts-nx-marine-details>
+    </p-panel>
+
+    <p-panel >
+        <angular-concepts-nx-secured-section 
+        formControlName="securedSection"
+        [securityContext]="securityContext"
+        >
+        </angular-concepts-nx-secured-section>
+    </p-panel>
+
+</div>

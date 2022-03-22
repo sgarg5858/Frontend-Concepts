@@ -1,0 +1,14 @@
+<div [formGroup]="formGroup" class="layout">
+    <p-panel [header]="'Deliveries'">
+      <angular-concepts-nx-order-items
+        formControlName="deliveries"
+        (totalChanged)="handlerDeliveriesTotalChanged($event)"
+      ></angular-concepts-nx-order-items>
+    </p-panel>
+    <p-panel [header]="'Receipts'">
+      <angular-concepts-nx-order-items
+        formControlName="receipts"
+        (totalChanged)="handleReceiptsTotalChanged($event)"
+      ></angular-concepts-nx-order-items>
+    </p-panel>
+  </div>

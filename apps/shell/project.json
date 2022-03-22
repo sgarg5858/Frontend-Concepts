@@ -15,7 +15,12 @@
         "tsConfig": "apps/shell/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
-        "styles": ["apps/shell/src/styles.scss"],
+        "styles": [
+          "apps/shell/src/styles.scss",
+          "node_modules/primeng/resources/themes/saga-blue/theme.css",
+          "node_modules/primeng/resources/primeng.min.css",
+          "node_modules/primeicons/primeicons.css"
+        ],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/shell/webpack.config.js"
@@ -99,6 +104,7 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
+          "nx serve custom-forms",
           "nx serve css-grid",
           "nx serve attribute-directives",
           "nx serve structural-directives",

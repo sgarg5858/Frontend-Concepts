@@ -1,0 +1,39 @@
+<div class="main-layout" [formGroup]="formGroup">
+    <div class="layout" *ngFor="let ctrl of getItems(); let i = index">
+      <div>
+        <angular-concepts-nx-order-item [formControl]="ctrl"></angular-concepts-nx-order-item>
+      </div>
+      <div>
+        <button
+          pButton
+          type="button"
+          label="Delete"
+          class="p-button-sm p-button-danger"
+          (click)="removeItem(i)"
+        ></button>
+      </div>
+    </div>
+    <div class="addItem">
+      <button
+        pButton
+        type="button"
+        label="Add"
+        class="p-button-sm"
+        (click)="addItem()"
+      ></button>
+    </div>
+    <div>
+      <input
+        class="total"
+        type="text"
+        *ngIf="getItems().length > 0"
+        formControlName="total"
+        class="total"
+        readonly
+        pInputText
+      />
+    </div>
+    <!-- </div> -->
+  </div>
+  
+  

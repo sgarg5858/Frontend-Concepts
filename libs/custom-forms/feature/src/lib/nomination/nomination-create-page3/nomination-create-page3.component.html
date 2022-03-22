@@ -1,0 +1,57 @@
+<div [formGroup]="formGroup">
+
+      <div>
+          <p-panel header="Nomination Header">
+              <angular-concepts-nx-nomination-header
+              formControlName="nominationHeader"
+              [isReadOnly]="true">
+            </angular-concepts-nx-nomination-header>
+          </p-panel>
+      </div>
+
+      <div class="ledger">
+
+        <div class="deliveries">
+          <table>
+            <tr>
+              <th>Facility</th>
+              <th>Product</th>
+              <th>Quantity</th>
+            </tr>
+            <tr *ngFor="let delivery of deliveries">
+              <td>
+                {{delivery.facility}}
+              </td>
+              <td>
+                {{delivery.product}}
+              </td>
+              <td>
+                {{delivery.quantity}}
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="receipts">
+          <table>
+            <tr>
+              <th>Facility</th>
+              <th>Product</th>
+              <th>Quantity</th>
+            </tr>
+            <tr *ngFor="let reciept of receipts">
+              <td>
+                {{reciept.facility}}
+              </td>
+              <td>
+                {{reciept.product}}
+              </td>
+              <td>
+                {{reciept.quantity}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+      </div>
+</div>

@@ -1,0 +1,59 @@
+.layout {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 5px;
+    .item-0 {
+      grid-column: 1 / 4;
+    }
+  }
+
+  .read-only-layout {
+    display: grid;
+    grid-template-areas:
+      'assetGroup customer type contract'
+      'startDate endDate vessel .';
+  
+    grid-gap: 5px;
+    .item-0 {
+      grid-area: assetGroup;
+    }
+    .item-1 {
+      grid-area: customer;
+    }
+    .item-2 {
+      grid-area: startDate;
+    }
+    .item-3 {
+      grid-area: endDate;
+    }
+    .item-4 {
+      grid-area: contract;
+    }
+    .item-5 {
+      grid-area: type;
+    }
+    .item-6 {
+      grid-area: vessel;
+    }
+  }
+  
+  .field {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: flex-end;
+  }
+  
+  .label-caption {
+    width: 85px;
+    text-align: right;
+    vertical-align: baseline;
+    font-weight: bold;
+  }
+  
+  :host ::ng-deep .p-dropdown {
+    width: 14rem;
+  }
+  
+  
+  

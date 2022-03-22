@@ -1,0 +1,28 @@
+{
+  "root": "apps/reusable-forms-1-e2e",
+  "sourceRoot": "apps/reusable-forms-1-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/reusable-forms-1-e2e/cypress.json",
+        "devServerTarget": "reusable-forms:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "reusable-forms:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/reusable-forms-1-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["reusable-forms"]
+}

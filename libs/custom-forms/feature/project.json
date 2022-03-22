@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/custom-forms/feature",
+  "sourceRoot": "libs/custom-forms/feature/src",
+  "prefix": "angular-concepts-nx",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/custom-forms/feature"],
+      "options": {
+        "jestConfig": "libs/custom-forms/feature/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/custom-forms/feature/src/**/*.ts",
+          "libs/custom-forms/feature/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

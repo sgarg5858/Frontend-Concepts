@@ -1,0 +1,22 @@
+.user-layout {
+    display: grid;
+    grid-template-areas: 'item-0 item-1';
+    .item-1 {
+      grid-area: item-1;
+    }
+    .item-0 {
+      grid-area: item-0;
+    }
+  }
+  .admin-layout {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+  
+  .field {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: flex-end;
+  }
+  

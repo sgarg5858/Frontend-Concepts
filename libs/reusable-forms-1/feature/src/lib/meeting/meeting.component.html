@@ -1,0 +1,37 @@
+<div [formGroup]="formGroup">
+
+    <div class="step1">
+        <angular-concepts-nx-meeting-create-page1 
+        *ngIf="step == 1"
+        formControlName="step1"
+        >
+        </angular-concepts-nx-meeting-create-page1>
+    </div>
+
+    <div class="step2">
+        <angular-concepts-nx-meeting-create-page2
+        *ngIf="step == 2"
+        formControlName="step2"
+        >
+        </angular-concepts-nx-meeting-create-page2>
+    </div>
+
+    <div class="layout">
+        <div class="previous">
+            <button
+            [disabled]="step === 1"
+            (click)="handlePrev()"
+            >
+                Previous
+            </button>
+        </div>
+        <div class="next">
+            <button
+            (click)="handleNext()"
+            >
+                {{step == 2 ? 'Save' :'Next'}}
+            </button>
+        </div>
+    </div>
+
+</div>

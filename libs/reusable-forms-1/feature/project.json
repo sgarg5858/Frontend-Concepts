@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/reusable-forms-1/feature",
+  "sourceRoot": "libs/reusable-forms-1/feature/src",
+  "prefix": "angular-concepts-nx",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/reusable-forms-1/feature"],
+      "options": {
+        "jestConfig": "libs/reusable-forms-1/feature/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/reusable-forms-1/feature/src/**/*.ts",
+          "libs/reusable-forms-1/feature/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,12 @@
+.layout {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 5px;
+  }
+  .field {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: flex-end;
+  }
+  

@@ -1,0 +1,28 @@
+{
+  "root": "apps/custom-forms-e2e",
+  "sourceRoot": "apps/custom-forms-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/custom-forms-e2e/cypress.json",
+        "devServerTarget": "custom-forms:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "custom-forms:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/custom-forms-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["custom-forms"]
+}
