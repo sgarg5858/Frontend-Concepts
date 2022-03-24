@@ -25,12 +25,12 @@ export class ContractService {
   ];
 
   getContracts(customer: string, startDate: Date, endDate: Date): string[] {
-    console.log('customer', customer, this.contracts);
+    // console.log('customer', customer, this.contracts);
     let a = this.contracts
       .filter((c) => c.customer === customer)
       .map((c) => c.contract);
 
-    console.log('asdasd', a);
+    // console.log('asdasd', a);
     return a;
   }
 }
