@@ -42,7 +42,7 @@ export class NominationService {
   }
 
   get vessels$(): Observable<string[]> {
-    return of([...this.masterDataService.vessels.map(v => v.vessel)]);
+    return of([...this.masterDataService.getVessels().map(v => v.vessel)]);
   }
 
   getVesselLength(vessel:string): string {

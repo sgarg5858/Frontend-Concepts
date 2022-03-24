@@ -20,7 +20,7 @@ export const mockedMasterData ={
 
 import { MasterDataService } from './master-data.service';
 
-fdescribe('MasterDataService', () => {
+describe('MasterDataService', () => {
   let service: MasterDataService;
 
   beforeEach(() => {

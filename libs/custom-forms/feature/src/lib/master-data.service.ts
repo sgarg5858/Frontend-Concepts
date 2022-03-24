@@ -45,7 +45,7 @@ export class MasterDataService {
     return this.masterData.vessels.filter((v) => v.vessel === vessel)[0].length;
   }
 
-  get vessels(): any[] {
+  getVessels(): any[] {
     return [...this.masterData.vessels];
   }
 
