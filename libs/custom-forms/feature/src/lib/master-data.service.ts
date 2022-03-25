@@ -26,6 +26,7 @@ export class MasterDataService {
   getAssetGroup(): string[] {
     return [...this.masterData.assetGroup];
   }
+  
   getTypes(contract: string): string[] {
     return [
       ...this.masterData.types

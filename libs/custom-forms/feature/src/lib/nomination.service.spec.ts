@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import exp = require('constants');
+import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { ContractService } from './contract.service';
 import { MasterDataService } from './master-data.service';
 import { mockedMasterData } from './master-data.service.spec';
@@ -8,7 +9,7 @@ import { NominationService } from './nomination.service';
 
 describe('NominationService', () => {
   let service: NominationService;
-  let contractService:any={};
+  let contractService:ContractService;
   let masterDataService:MasterDataService;
 
   beforeEach(() => {
@@ -58,7 +59,6 @@ describe('NominationService', () => {
         return "";
       }),
       getVessels: jest.fn().mockReturnValue(mockedMasterData.vessels)
-
     }
 
     TestBed.configureTestingModule({
@@ -164,27 +164,40 @@ describe('NominationService', () => {
         
         expect(contracts.length).toBe(1);
         expect(contracts[0]).toBe('Contract-1');
-        done();
+        // done();
 
         //How to check this one? Is this right way
-        // service.types$.subscribe((types:string[])=>{
-        //   console.log("Valid Contract",types)
-        //   try {
-        //     expect(types.length).toBe(1);
-        //     done();
-        //   } catch (error) {
-        //     done(error);
-        //   }
-        // })
+
+
+        service.types$.subscribe((types:string[])=>{
+          console.log("Valid Contract",types)
+          try {
+            expect(types.length).toBe(0);
+            done();
+          } catch (error) {
+            done(error);
+          }
+        })
+
+
       } catch (error) {
         done(error);
       }
 
     });
 
-   
-
   })
+
+  it('Filter Contracts based on Customer- Valid Case Promise Way ',async ()=>{
+    
+    service.filterContracts('Customer-1',new Date(),new Date());
+
+    await expect(firstValueFrom(service.contracts)).resolves.toEqual(['Contract-1']);
+
+    await expect(firstValueFrom(service.types$)).resolves.toEqual([]);
+
+  });
+   
 
   it('Filter Contracts based on Customer- InValid Case ',(done)=>{
     
@@ -201,13 +214,22 @@ describe('NominationService', () => {
        done(error);
      }
     });
-   
-
   })
+
+  it('Filter Contracts based on Customer- InValid Case  -Promise Way',async ()=>{
+    
+    service.filterContracts('Customer-6',new Date(),new Date());
+
+    await expect(firstValueFrom(service.contracts)).resolves.toEqual([]);
+    });
 
   it('Filter Customers based on AssetGroups- Valid Case ',(done)=>{
     
     service.filterCustomers('AssetGroup-1');
+
+    //if we have to do multiple observables testing then we have to nest observables as we have to call 
+    // done() when we are done testing our all observables 
+    // check the approach where we convert the observable to promise and so easy to test..
     service.customers$.subscribe((customers:string[])=>{
       console.log("Customers",customers)
       try {
@@ -217,6 +239,24 @@ describe('NominationService', () => {
         done(error);   
       }
     });
+  })
+
+  //Use this approach to test observables ....
+
+  it('Filter Customers based on AssetGroups- Valid Case Promise way ',async()=>{
+    
+    service.filterCustomers('AssetGroup-1');
+
+    await expect(firstValueFrom(service.customers$)).resolves.toEqual(['Customer-1']);
+
+    await firstValueFrom(service.customers$).then((customers:string[])=>{
+      expect(customers).toEqual(['Customer-1']);
+      expect(customers.length).toBe(1);
+    })
+
+    await expect(firstValueFrom(service.contracts)).resolves.toEqual([]);
+    await expect(firstValueFrom(service.types$)).resolves.toEqual([]);
+
   })
 
 });
