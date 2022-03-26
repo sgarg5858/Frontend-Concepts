@@ -20,7 +20,7 @@ describe('NominationHeaderComponent', () => {
   let component: NominationHeaderComponent;
   let fixture: ComponentFixture<NominationHeaderComponent>;
   let nominationServiceMock: NominationService;
-  let debugElemenet:DebugElement;
+  let debugElement:DebugElement;
 
   beforeEach(async () => {
 
@@ -94,46 +94,46 @@ describe('NominationHeaderComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     nominationServiceMock=TestBed.inject(NominationService);
-    debugElemenet=fixture.debugElement;
+    debugElement=fixture.debugElement;
 
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-  // it('should find the assetGroup field in DOM',()=>{
-  //   const assetGroup = debugElemenet.query(By.css('.item-0 .p-element'));
-  //   expect(assetGroup).toBeDefined();
-  //   assetGroup.nativeElement.click();
+  it('should find the assetGroup field in DOM',()=>{
+    const assetGroup = debugElement.query(By.css('.item-0 .p-element'));
+    expect(assetGroup).toBeDefined();
+    assetGroup.nativeElement.click();
 
-  // })
+  })
 
-  // it('Setting Value of the assetgroup via setValue', async()=>{
-  //   console.log("Setting Asset Group Value");
-  //   component.formGroup.controls?.['assetGroup'].setValue('AssetGroup-1');
+  it('Setting Value of the assetgroup via setValue', async()=>{
+    console.log("Setting Asset Group Value");
+    component.formGroup.controls?.['assetGroup'].setValue('AssetGroup-1');
 
 
-  //   fixture.detectChanges();
+    fixture.detectChanges();
 
-  //   fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges.subscribe((value)=>{
-  //     console.log("AssetGroups Coming vai setValue",value)
-  //   })
+    fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges.subscribe((value)=>{
+      console.log("AssetGroups Coming vai setValue",value)
+    })
  
-  //   expect(nominationServiceMock.filterCustomers).toBeCalled();
-  //   expect(nominationServiceMock.filterContracts).toBeCalled();
-  //   expect(nominationServiceMock.filterTypes).toBeCalled();
+    expect(nominationServiceMock.filterCustomers).toBeCalled();
+    expect(nominationServiceMock.filterContracts).toBeCalled();
+    expect(nominationServiceMock.filterTypes).toBeCalled();
 
-  //   await expect(firstValueFrom(nominationServiceMock.customers$)).resolves.toEqual(['Customer-1']);
-  //   await expect(firstValueFrom(nominationServiceMock.contracts)).resolves.toEqual([]);
-  //   await expect(firstValueFrom(nominationServiceMock.types$)).resolves.toEqual([]);
+    await expect(firstValueFrom(nominationServiceMock.customers$)).resolves.toEqual(['Customer-1']);
+    await expect(firstValueFrom(nominationServiceMock.contracts)).resolves.toEqual([]);
+    await expect(firstValueFrom(nominationServiceMock.types$)).resolves.toEqual([]);
 
-  // });
+  });
 
   it('Setting Value of the assetgroup via UI and using DropDown Class', async()=>{
     console.log("Setting Asset Group Value");
 
-    const assetGroup:Dropdown = debugElemenet.query(By.css('.item-0 .p-element')).componentInstance;
+    const assetGroup:Dropdown = debugElement.query(By.css('.item-0 .p-element')).componentInstance;
 
     fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges.subscribe((value)=>{
       console.log("AssetGroups Coming from DropDown",value)
