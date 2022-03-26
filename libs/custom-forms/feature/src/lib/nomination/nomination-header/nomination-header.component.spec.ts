@@ -11,8 +11,10 @@ import {InputTextModule} from 'primeng/inputtext';
 import { NominationHeaderComponent } from './nomination-header.component';
 import { NominationService } from '../../nomination.service';
 import { mockedMasterData } from '../../master-data.service.spec';
-import { of } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { createPublicKey } from 'crypto';
 
 describe('NominationHeaderComponent', () => {
   let component: NominationHeaderComponent;
@@ -34,6 +36,7 @@ describe('NominationHeaderComponent', () => {
         return "";
       }),
       filterCustomers: jest.fn().mockImplementation((assetGroup:string)=>{
+        console.log("Calling filter Customers on Asset Group Change",assetGroup)
         if(assetGroup == 'AssetGroup-1') 
         nominationServiceMock.customers$= of(['Customer-1']);
         else if(assetGroup == 'AssetGroup-2') 
@@ -42,6 +45,8 @@ describe('NominationHeaderComponent', () => {
         nominationServiceMock.customers$= of(['Customer-3'])
         else 
         nominationServiceMock.customers$= of([])
+
+        nominationServiceMockvalue.filterContracts("",new Date(), new Date());
       }),
       filterContracts: jest.fn().mockImplementation((customer:string, startDate:Date, endDate:Date)=>{
         if(customer === 'Customer-1') 
@@ -50,6 +55,9 @@ describe('NominationHeaderComponent', () => {
         nominationServiceMock.contracts = of(['Contract-2']);
         else 
         nominationServiceMock.contracts = of([]);
+
+        nominationServiceMock.filterTypes("");
+
       }),
       filterTypes: jest.fn().mockImplementation((contract:string)=>{
 
@@ -90,13 +98,87 @@ describe('NominationHeaderComponent', () => {
 
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  // it('should create', () => {
+  //   expect(component).toBeTruthy();
+  // });
+
+  // it('should find the assetGroup field in DOM',()=>{
+  //   const assetGroup = debugElemenet.query(By.css('.item-0 .p-element'));
+  //   expect(assetGroup).toBeDefined();
+  //   assetGroup.nativeElement.click();
+
+  // })
+
+  // it('Setting Value of the assetgroup via setValue', async()=>{
+  //   console.log("Setting Asset Group Value");
+  //   component.formGroup.controls?.['assetGroup'].setValue('AssetGroup-1');
+
+
+  //   fixture.detectChanges();
+
+  //   fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges.subscribe((value)=>{
+  //     console.log("AssetGroups Coming vai setValue",value)
+  //   })
+ 
+  //   expect(nominationServiceMock.filterCustomers).toBeCalled();
+  //   expect(nominationServiceMock.filterContracts).toBeCalled();
+  //   expect(nominationServiceMock.filterTypes).toBeCalled();
+
+  //   await expect(firstValueFrom(nominationServiceMock.customers$)).resolves.toEqual(['Customer-1']);
+  //   await expect(firstValueFrom(nominationServiceMock.contracts)).resolves.toEqual([]);
+  //   await expect(firstValueFrom(nominationServiceMock.types$)).resolves.toEqual([]);
+
+  // });
+
+  it('Setting Value of the assetgroup via UI and using DropDown Class', async()=>{
+    console.log("Setting Asset Group Value");
+
+    const assetGroup:Dropdown = debugElemenet.query(By.css('.item-0 .p-element')).componentInstance;
+
+    fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges.subscribe((value)=>{
+      console.log("AssetGroups Coming from DropDown",value)
+    })
+
+
+    assetGroup.selectItem(new Event('change'),'AssetGroup-1');
+    fixture.detectChanges();
+
+   
+    expect(nominationServiceMock.filterCustomers).toBeCalled();
+    expect(nominationServiceMock.filterContracts).toBeCalled();
+    expect(nominationServiceMock.filterTypes).toBeCalled();
+
+    await expect(firstValueFrom(nominationServiceMock.customers$)).resolves.toEqual(['Customer-1']);
+    await expect(firstValueFrom(nominationServiceMock.contracts)).resolves.toEqual([]);
+    await expect(firstValueFrom(nominationServiceMock.types$)).resolves.toEqual([]);
+
   });
 
-  it('should show the assetGroup field and its options',()=>{
-    const assetGroup:Dropdown = debugElemenet.nativeElement.querySelector('.item-0 .p-element');
-    console.log(assetGroup)
+  // it('Setting Value of the assetgroup via UI and using nativeElement', async()=>{
+  //   console.log("Setting Asset Group Value");
+
+  //   const assetGroup = debugElemenet.query(By.css('.item-0 .p-element'));
+
+  //   fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges.subscribe((value)=>{
+  //     console.log("AssetGroups Coming from native Ellement =>",value)
+  //   })
+
+  //   assetGroup.nativeElement.value="AssetGroup-1";
+  //   assetGroup.nativeElement.dispatchEvent(new Event('change'));
+  //   fixture.detectChanges();
+
+  
     
-  })
+  //   // await expect( firstValueFrom(fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges)
+  //   // ).resolves.toBe('AssetGroup-1');
+  //   expect(nominationServiceMock.filterCustomers).toBeCalled();
+  //   expect(nominationServiceMock.filterContracts).toBeCalled();
+  //   expect(nominationServiceMock.filterTypes).toBeCalled();
+
+  //   await expect(firstValueFrom(nominationServiceMock.customers$)).resolves.toEqual(['Customer-1']);
+  //   await expect(firstValueFrom(nominationServiceMock.contracts)).resolves.toEqual([]);
+  //   await expect(firstValueFrom(nominationServiceMock.types$)).resolves.toEqual([]);
+
+  // });
+
 });

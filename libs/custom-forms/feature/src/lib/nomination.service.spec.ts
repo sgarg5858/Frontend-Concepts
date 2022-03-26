@@ -84,12 +84,13 @@ describe('NominationService', () => {
   });
 
   it('getter for assetGroup returns assetGroups',(done)=>{
+
     service.assetGroup$.subscribe((val:string[])=>{
       console.log("Assetgroups",val);
       try {
         expect(val.length).toBe(3);
-      expect(val).toEqual(mockedMasterData.assetGroup);
-      done();
+        expect(val).toEqual(mockedMasterData.assetGroup);
+        done();
       } catch (error) {
         done(error);
       }
@@ -121,9 +122,9 @@ describe('NominationService', () => {
   it('filter types method when passed Valid Contract',(done)=>{
 
     service.filterTypes('Contract-1');
+
     service.types$.subscribe((types:string[])=>{
       console.log("Valid Contract",types)
-    
       try {
         expect(types.length).toBeGreaterThan(0);
         expect(types.length).toBe(1);
@@ -139,6 +140,7 @@ describe('NominationService', () => {
   it('filter types method when passed Invalid Contract',(done)=>{
     
     service.filterTypes('Contract-4');
+    
     service.types$.subscribe((types:string[])=>{
       console.log("Invalid Contract",types)
      
