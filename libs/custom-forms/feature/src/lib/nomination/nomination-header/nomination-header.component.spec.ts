@@ -197,8 +197,12 @@ describe('NominationHeaderComponent', () => {
   it('Setting Value of the assetgroup via setValue and using TestScheduler', async()=>{
 
     scheduler.run(({expectObservable})=>{
+
+
       const expectedCustomers={a:['Customer-1']};
       const customerSource$ = 'a';
+      const contractsAndTypes$="a";
+      const contractAndTypeValues={a:[]};
 
       component.formGroup.controls?.['assetGroup'].setValue('AssetGroup-1');
       fixture.detectChanges();
@@ -207,27 +211,13 @@ describe('NominationHeaderComponent', () => {
       expect(nominationServiceMock.filterContracts).toBeCalled();
       expect(nominationServiceMock.filterTypes).toBeCalled();
 
-      const contractsAndTypes$="a";
-      const contractAndTypeValues={a:[]};
+     
 
       expectObservable(nominationServiceMock.customers$).toBe(customerSource$,expectedCustomers);
       expectObservable(nominationServiceMock.contracts).toBe(contractsAndTypes$,contractAndTypeValues);
       expectObservable(nominationServiceMock.types$).toBe(contractsAndTypes$,contractAndTypeValues);
-    
 
     })
-
-    
-    // fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges.subscribe((value)=>{
-    //   console.log("AssetGroups Coming vai setValue",value)
-    // })
- 
-   
-
-    // await expect(firstValueFrom(nominationServiceMock.customers$)).resolves.toEqual(['Customer-1']);
-    // await expect(firstValueFrom(nominationServiceMock.contracts)).resolves.toEqual([]);
-    // await expect(firstValueFrom(nominationServiceMock.types$)).resolves.toEqual([]);
-
   });
 
   it('Setting Value of the assetgroup via UI and using DropDown Class', async()=>{
