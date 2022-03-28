@@ -21,8 +21,6 @@ export class MarineDetailsComponent extends FormGeneratorComponent implements On
   constructor(private nominationService:NominationService) {
     super()
    }
-
-
    createForm() {
     this.formGroup = new FormGroup({
       vessel: new SmartFormControl({

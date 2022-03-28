@@ -9,7 +9,7 @@
 
         </angular-concepts-nx-nomination-header>
     </p-panel>
-    <p-panel *ngIf="showMarineDetails">
+    <p-panel class="marineDetails" header="Marine Details" *ngIf="showMarineDetails">
         <angular-concepts-nx-marine-details 
         formControlName="marineDetails"
         (valueChanged)="vesselChanged($event)"

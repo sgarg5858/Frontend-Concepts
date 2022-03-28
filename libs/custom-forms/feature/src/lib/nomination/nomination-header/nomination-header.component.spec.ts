@@ -14,9 +14,54 @@ import { mockedMasterData } from '../../master-data.service.spec';
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { TestScheduler } from 'rxjs/testing';
+
+let nominationServiceMockValue={
+  customers$:of(['']),
+  contracts:of(['']),
+  types$ :of(['']),
+  vessels$:of(['']),
+  assetGroup$: of(mockedMasterData.assetGroup),
+  getVesselLength: jest.fn().mockImplementation((vessel:string)=>{
+    if(vessel === 'Vessel-1') return '100 ft';
+    else if( vessel === 'Vessel-2') return '200 ft';
+    return "";
+  }),
+  filterCustomers: jest.fn().mockImplementation((assetGroup:string)=>{
+    console.log("Calling filter Customers on Asset Group Change",assetGroup);
+    
+    if(assetGroup == 'AssetGroup-1') 
+    nominationServiceMockValue.customers$= of(['Customer-1']);
+    else if(assetGroup == 'AssetGroup-2') 
+    nominationServiceMockValue.customers$= of(['Customer-2'])
+    else if(assetGroup == 'AssetGroup-3') 
+    nominationServiceMockValue.customers$= of(['Customer-3'])
+    else 
+    nominationServiceMockValue.customers$= of([])
 
 
-class NominationServiceMock{
+    nominationServiceMockValue.filterContracts("",new Date(), new Date());
+  }),
+  filterContracts: jest.fn().mockImplementation((customer:string, startDate:Date, endDate:Date)=>{
+    if(customer === 'Customer-1') 
+    nominationServiceMockValue.contracts = of(['Contract-1']);
+    else if(customer === 'Customer-2') 
+    nominationServiceMockValue.contracts = of(['Contract-2']);
+    else 
+    nominationServiceMockValue.contracts = of([]);
+
+    nominationServiceMockValue.filterTypes("");
+
+  }),
+  filterTypes: jest.fn().mockImplementation((contract:string)=>{
+
+    if(contract == 'Contract-1') nominationServiceMockValue.types$ = of(['Marine']);
+    else if (contract == 'Contract-2') nominationServiceMockValue.types$ = of(['Transport']);
+    else nominationServiceMockValue.types$ = of([])
+  })
+}
+
+export class NominationServiceMock{
 
     customerSubject = new BehaviorSubject<string[]>([]);
     customers$=this.customerSubject.asObservable();
@@ -29,7 +74,9 @@ class NominationServiceMock{
 
     assetGroup$= of(mockedMasterData.assetGroup);
 
-    vessels$= of(['']);
+    vessels$= of( [
+      'Vessel-1','Vessel-2'
+    ]);
 
     getVesselLength= jest.fn().mockImplementation((vessel:string)=>{
       if(vessel === 'Vessel-1') return '100 ft';
@@ -47,9 +94,7 @@ class NominationServiceMock{
       else if(assetGroup == 'AssetGroup-3') 
         this.customerSubject.next(['Customer-3'])
       else 
-        this.customerSubject.next([])
-
-
+        this.customerSubject.next([]);
       this.filterContracts("",new Date(), new Date());
     });
 
@@ -57,9 +102,9 @@ class NominationServiceMock{
       if(customer === 'Customer-1') 
         this.contractSubject.next(['Contract-1'])
       else if(customer === 'Customer-2') 
-      this.contractSubject.next(['Contract-2'])
+        this.contractSubject.next(['Contract-2'])
       else 
-      this.contractSubject.next([])
+        this.contractSubject.next([])
 
       this.filterTypes("");
     })
@@ -69,6 +114,7 @@ class NominationServiceMock{
       if(contract == 'Contract-1') this.typeSubject.next(['Marine']);
       else if (contract == 'Contract-2') this.typeSubject.next(['Transport']);
       else this.typeSubject.next([]);
+
     })
 }
 
@@ -77,53 +123,9 @@ describe('NominationHeaderComponent', () => {
   let fixture: ComponentFixture<NominationHeaderComponent>;
   let nominationServiceMock: NominationService;
   let debugElement:DebugElement;
+  let scheduler:TestScheduler;
 
   beforeEach(async () => {
-
-    let nominationServiceMockValue={
-      customers$:of(['']),
-      contracts:of(['']),
-      types$ :of(['']),
-      vessels$:of(['']),
-      assetGroup$: of(mockedMasterData.assetGroup),
-      getVesselLength: jest.fn().mockImplementation((vessel:string)=>{
-        if(vessel === 'Vessel-1') return '100 ft';
-        else if( vessel === 'Vessel-2') return '200 ft';
-        return "";
-      }),
-      filterCustomers: jest.fn().mockImplementation((assetGroup:string)=>{
-        console.log("Calling filter Customers on Asset Group Change",assetGroup);
-        
-        if(assetGroup == 'AssetGroup-1') 
-        nominationServiceMockValue.customers$= of(['Customer-1']);
-        else if(assetGroup == 'AssetGroup-2') 
-        nominationServiceMockValue.customers$= of(['Customer-2'])
-        else if(assetGroup == 'AssetGroup-3') 
-        nominationServiceMockValue.customers$= of(['Customer-3'])
-        else 
-        nominationServiceMockValue.customers$= of([])
-
-
-        nominationServiceMockValue.filterContracts("",new Date(), new Date());
-      }),
-      filterContracts: jest.fn().mockImplementation((customer:string, startDate:Date, endDate:Date)=>{
-        if(customer === 'Customer-1') 
-        nominationServiceMockValue.contracts = of(['Contract-1']);
-        else if(customer === 'Customer-2') 
-        nominationServiceMockValue.contracts = of(['Contract-2']);
-        else 
-        nominationServiceMockValue.contracts = of([]);
-
-        nominationServiceMockValue.filterTypes("");
-
-      }),
-      filterTypes: jest.fn().mockImplementation((contract:string)=>{
-
-        if(contract == 'Contract-1') nominationServiceMockValue.types$ = of(['Marine']);
-        else if (contract == 'Contract-2') nominationServiceMockValue.types$ = of(['Transport']);
-        else nominationServiceMockValue.types$ = of([])
-      })
-    }
 
 
     await TestBed.configureTestingModule({
@@ -154,6 +156,10 @@ describe('NominationHeaderComponent', () => {
     fixture.detectChanges();
     nominationServiceMock=TestBed.inject(NominationService);
     debugElement=fixture.debugElement;
+    //For Testing Rxjs Observables
+    scheduler = new TestScheduler((actual,expected)=>{
+      expect(actual).toEqual(expected);
+    })
 
   });
 
@@ -184,6 +190,43 @@ describe('NominationHeaderComponent', () => {
     await expect(firstValueFrom(nominationServiceMock.customers$)).resolves.toEqual(['Customer-1']);
     await expect(firstValueFrom(nominationServiceMock.contracts)).resolves.toEqual([]);
     await expect(firstValueFrom(nominationServiceMock.types$)).resolves.toEqual([]);
+
+  });
+
+
+  it('Setting Value of the assetgroup via setValue and using TestScheduler', async()=>{
+
+    scheduler.run(({expectObservable})=>{
+      const expectedCustomers={a:['Customer-1']};
+      const customerSource$ = 'a';
+
+      component.formGroup.controls?.['assetGroup'].setValue('AssetGroup-1');
+      fixture.detectChanges();
+
+      expect(nominationServiceMock.filterCustomers).toBeCalled();
+      expect(nominationServiceMock.filterContracts).toBeCalled();
+      expect(nominationServiceMock.filterTypes).toBeCalled();
+
+      const contractsAndTypes$="a";
+      const contractAndTypeValues={a:[]};
+
+      expectObservable(nominationServiceMock.customers$).toBe(customerSource$,expectedCustomers);
+      expectObservable(nominationServiceMock.contracts).toBe(contractsAndTypes$,contractAndTypeValues);
+      expectObservable(nominationServiceMock.types$).toBe(contractsAndTypes$,contractAndTypeValues);
+    
+
+    })
+
+    
+    // fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges.subscribe((value)=>{
+    //   console.log("AssetGroups Coming vai setValue",value)
+    // })
+ 
+   
+
+    // await expect(firstValueFrom(nominationServiceMock.customers$)).resolves.toEqual(['Customer-1']);
+    // await expect(firstValueFrom(nominationServiceMock.contracts)).resolves.toEqual([]);
+    // await expect(firstValueFrom(nominationServiceMock.types$)).resolves.toEqual([]);
 
   });
 
@@ -249,7 +292,8 @@ describe('NominationHeaderComponent', () => {
     })
 
     //When start Date is set but endDate is not set yet it should not call filterContracts
-    //this is giving invalid date
+    //this is giving invalid date 
+    // we can set start and end Date via model...
     startDate.selectDate(new Date());
     fixture.detectChanges();
 
@@ -261,6 +305,7 @@ describe('NominationHeaderComponent', () => {
 
     //When end Date is set and we have all three values now it shpuld call filter contracts
     endDate.selectDate(new Date());
+
     fixture.detectChanges();
 
     expect(nominationServiceMock.filterContracts).toBeCalled();
