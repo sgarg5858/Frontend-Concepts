@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import exp = require('constants');
@@ -47,15 +47,55 @@ describe('MarineDetailsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
 
-  it('Should show Vessel and Length Controls and vessel options and selecting vessel should update length and length is readonly',()=>{
+  it('Should show Vesseloptions using waitForAsync',waitForAsync(()=>{
 
+    // whenStable() is a promise that resolves when all pending async tasks are done and microtask and callback queue are empty
+    fixture.whenStable().then(()=>{
+
+      fixture.detectChanges();
+      const vesselElement:Dropdown = debugElement.query(By.css('p-dropdown')).componentInstance;
+      //Checking Vessel Options
+      console.log("Vessel ",vesselElement.options)
+      expect(vesselElement.options.length).toBe(2);
+  
+    })
+    
+  }));
+
+  it('Should show Vesseloptions using fakeAsync',fakeAsync(()=>{
+
+      flush();
+      //OR
+      // tick();
+      fixture.detectChanges();
+
+      const vesselElement:Dropdown = debugElement.query(By.css('p-dropdown')).componentInstance;
+      //Checking Vessel Options
+      console.log("Vessel ",vesselElement.options)
+      expect(vesselElement.options.length).toBe(2);
+  
+    
+  }));
+
+
+  it('Should show Vessel and Length Controls and vessel options and selecting vessel should update length and length is readonly',fakeAsync(()=>{
+
+    //tick => so that vessel observables emits as it is async obs now
+    tick();
+    //report data to view as we have to run CD manually...
+    fixture.detectChanges();
+
+    //Select Vessel Element....
     const vesselElement:Dropdown = debugElement.query(By.css('p-dropdown')).componentInstance;
-    //Checking Vessel Options
+    //Checking Vessel Options should be 2
     expect(vesselElement.options.length).toBe(2);
 
+    //Getting Length Input Variable
     const lengthElement:HTMLInputElement = debugElement.query(By.css('.item-1 input')).nativeElement;
-    //Checking Initial Value of Length Input
+
+    //Checking Initial Value of Length Input both model and view
     expect(component.formGroup.controls?.['length'].value).toBe(null);
     expect(lengthElement.innerText).toBe(undefined);
 
@@ -79,5 +119,8 @@ describe('MarineDetailsComponent', () => {
     expect(lengthElement.readOnly).toBe(true);
     
 
-  })
+  }));
+
+  
+
 });

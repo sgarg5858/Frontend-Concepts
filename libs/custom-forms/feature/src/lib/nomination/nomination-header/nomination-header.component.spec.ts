@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
@@ -11,7 +11,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import { NominationHeaderComponent } from './nomination-header.component';
 import { NominationService } from '../../nomination.service';
 import { mockedMasterData } from '../../master-data.service.spec';
-import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
+import { asyncScheduler, BehaviorSubject, defer, firstValueFrom, Observable, of } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TestScheduler } from 'rxjs/testing';
@@ -60,6 +60,9 @@ let nominationServiceMockValue={
     else nominationServiceMockValue.types$ = of([])
   })
 }
+export function asyncData<T>(data: T): Observable<T> {
+  return defer(() => Promise.resolve(data));
+}
 
 export class NominationServiceMock{
 
@@ -74,7 +77,7 @@ export class NominationServiceMock{
 
     assetGroup$= of(mockedMasterData.assetGroup);
 
-    vessels$= of( [
+    vessels$= asyncData([
       'Vessel-1','Vessel-2'
     ]);
 
@@ -153,9 +156,9 @@ describe('NominationHeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NominationHeaderComponent);
     component = fixture.componentInstance;
+    debugElement=fixture.debugElement;
     fixture.detectChanges();
     nominationServiceMock=TestBed.inject(NominationService);
-    debugElement=fixture.debugElement;
     //For Testing Rxjs Observables
     scheduler = new TestScheduler((actual,expected)=>{
       expect(actual).toEqual(expected);
@@ -194,6 +197,7 @@ describe('NominationHeaderComponent', () => {
   });
 
 
+  //Using Test Scheduler
   it('Setting Value of the assetgroup via setValue and using TestScheduler', async()=>{
 
     scheduler.run(({expectObservable})=>{
@@ -225,7 +229,7 @@ describe('NominationHeaderComponent', () => {
 
     const assetGroup:Dropdown = debugElement.query(By.css('.item-0 .p-element')).componentInstance;
     const customer:Dropdown = debugElement.query(By.css('.item-1 .p-element')).componentInstance;
-
+  //  let nomination= debugElement.injector.get(NominationService)
     //Working for assetgroup
     console.log("AssetGroup Options",assetGroup.options)
     expect(assetGroup.options.length).toBe(3);
@@ -235,6 +239,7 @@ describe('NominationHeaderComponent', () => {
     fixture.componentInstance.formGroup?.['controls']?.['assetGroup'].valueChanges.subscribe((value)=>{
       console.log("AssetGroups Coming from DropDown",value)
     })
+    // flushMicrotasks();
 
 
     assetGroup.selectItem(new Event('change'),'AssetGroup-1');
@@ -268,7 +273,6 @@ describe('NominationHeaderComponent', () => {
 
     // assetGroup.selectItem(new Event('change'),'AssetGroup-1');
     // fixture.detectChanges();
-
   
     //When the value for only customer is set  it should not call filter contracts
     customer.selectItem(new Event('change'),'Customer-1');
@@ -314,7 +318,5 @@ describe('NominationHeaderComponent', () => {
     await expect(firstValueFrom(nominationServiceMock.types$)).resolves.toEqual(['Marine']);
 
   });
-
-
 
 });
