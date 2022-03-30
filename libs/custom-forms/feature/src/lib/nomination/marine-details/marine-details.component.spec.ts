@@ -50,33 +50,21 @@ describe('MarineDetailsComponent', () => {
   
 
   it('Should show Vesseloptions using waitForAsync',waitForAsync(()=>{
-
     // whenStable() is a promise that resolves when all pending async tasks are done and microtask and callback queue are empty
     fixture.whenStable().then(()=>{
-
       fixture.detectChanges();
       const vesselElement:Dropdown = debugElement.query(By.css('p-dropdown')).componentInstance;
-      //Checking Vessel Options
-      console.log("Vessel ",vesselElement.options)
       expect(vesselElement.options.length).toBe(2);
-  
     })
-    
   }));
 
   it('Should show Vesseloptions using fakeAsync',fakeAsync(()=>{
-
       flush();
       //OR
       // tick();
       fixture.detectChanges();
-
       const vesselElement:Dropdown = debugElement.query(By.css('p-dropdown')).componentInstance;
-      //Checking Vessel Options
-      console.log("Vessel ",vesselElement.options)
-      expect(vesselElement.options.length).toBe(2);
-  
-    
+      expect(vesselElement.options.length).toBe(2);    
   }));
 
 
