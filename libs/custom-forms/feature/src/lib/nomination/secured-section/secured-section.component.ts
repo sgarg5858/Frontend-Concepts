@@ -18,7 +18,7 @@ import { ControlType, SmartFormControl } from '../../types/basic-form-types';
 })
 export class SecuredSectionComponent extends FormGeneratorComponent implements OnInit,OnChanges {
 
-  constructor(private sec: SecurityService) { 
+  constructor() { 
     super();
   }
 
