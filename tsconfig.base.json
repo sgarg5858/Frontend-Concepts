@@ -29,6 +29,9 @@
       ],
       "@angular-concepts-nx/reusable-forms-1/feature": [
         "libs/reusable-forms-1/feature/src/index.ts"
+      ],
+      "@angular-concepts-nx/structural-directives/feature": [
+        "libs/structural-directives/feature/src/index.ts"
       ]
     }
   },

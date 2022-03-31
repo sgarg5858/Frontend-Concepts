@@ -21,6 +21,7 @@
     "shell": "apps/shell",
     "shell-e2e": "apps/shell-e2e",
     "structural-directives": "apps/structural-directives",
-    "structural-directives-e2e": "apps/structural-directives-e2e"
+    "structural-directives-e2e": "apps/structural-directives-e2e",
+    "structural-directives-feature": "libs/structural-directives/feature"
   }
 }

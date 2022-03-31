@@ -11,7 +11,7 @@ import { RemoteEntryComponent } from './entry.component';
     RouterModule.forChild([
       {
         path: '',
-        component: RemoteEntryComponent,
+        loadChildren: ()=> import('@angular-concepts-nx/structural-directives/feature').then(m=>m.StructuralDirectivesFeatureModule),
       },
     ]),
   ],

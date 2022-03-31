@@ -118,9 +118,5 @@ describe('NominationCreatePage1Component', () => {
 
     console.log(vesselElement.options);
     expect(vesselElement.options.length).toBe(2);
-
-
-
-   
   }))
 });

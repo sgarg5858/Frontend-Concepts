@@ -1,0 +1,26 @@
+
+<button (click)="toggleContent()">
+    {{showContent ? 'Hide ' :'Show '}} Content
+</button>
+<div class="mycontainer">
+    <div class="content" *showMyContentAfterDelay="{showContent,delay,countdownTemplate};else placeholder; let counter=counter">
+        <h1>My name is Sanjay</h1>
+        <h2>I am a frontend Engineer</h2>
+        <h3>In my free time, I like to workout, play badminton or table tennis.</h3>
+    </div>
+
+    <ng-template #placeholder>
+        <div class="content"> 
+            <h1>Please use Show Button to see bio.</h1>
+        </div>
+    </ng-template>
+
+    <ng-template #countdownTemplate let-counter="counter">
+      <div class="content">
+        <h1>
+            Showing bio in {{counter / 1000}} seconds
+        </h1>
+      </div>
+    </ng-template>
+
+</div>

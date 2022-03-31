@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/structural-directives/feature",
+  "sourceRoot": "libs/structural-directives/feature/src",
+  "prefix": "angular-concepts-nx",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/structural-directives/feature"],
+      "options": {
+        "jestConfig": "libs/structural-directives/feature/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/structural-directives/feature/src/**/*.ts",
+          "libs/structural-directives/feature/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
