@@ -4,10 +4,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { RouterModule } from '@angular/router';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NominationCreatePage3Component } from './nomination-create-page3/nomination-create-page3.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NominationCreatePage3Component } from './nomination-create-page3/nomination-create-page3.component';
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, NominationCreatePage3Component],
+  declarations: [
+    AppComponent,
+    NxWelcomeComponent,
+    NominationCreatePage3Component,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -48,6 +52,11 @@ import { NominationCreatePage3Component } from './nomination-create-page3/nomina
           path: 'custom-forms',
           loadChildren: () =>
             import('custom-forms/Module').then((m) => m.RemoteEntryModule),
+        },
+        {
+          path: 'rxjs-practice',
+          loadChildren: () =>
+            import('rxjs-practice/Module').then((m) => m.RemoteEntryModule),
         },
       ],
       { initialNavigation: 'enabledBlocking' }

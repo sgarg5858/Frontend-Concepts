@@ -9,3 +9,5 @@ declare module 'attribute-directives/Module';
 declare module 'css-grid/Module';
 
 declare module 'custom-forms/Module';
+
+declare module 'rxjs-practice/Module';

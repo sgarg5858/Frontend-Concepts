@@ -43,7 +43,11 @@ export class MasterDataService {
   }
   getVesselLength(vessel: string): string {
     console.log('vessel', vessel);
-    return this.masterData.vessels.filter((v) => v.vessel === vessel)[0].length;
+    let vessels:{vessel: string;length: string;}[]
+   = this.masterData.vessels.filter((v) => v.vessel === vessel);
+
+   console.log(vessels);
+    return vessels.length > 0 ? vessels[0].length : "";
   }
 
   getVessels(): any[] {

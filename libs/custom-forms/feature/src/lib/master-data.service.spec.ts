@@ -32,40 +32,64 @@ describe('MasterDataService', () => {
     expect(service).toBeTruthy();
   });
 
-  it(' getAssetGroup method should return assetGroups',()=>{
+  it('getAssetGroup method should return assetGroups',()=>{
     service.masterData=mockedMasterData;
     let assetGroups = service.getAssetGroup();
-    console.log("MASTER SERVICE",assetGroups)
+
     expect(assetGroups.length).toBe(3);
   })
 
-  it(' getTypes method should returns types based on type of contract',()=>{
+  it(' getTypes method should returns Marine type when we pass Contract-1 (Valid) Contract ',()=>{
     service.masterData=mockedMasterData;
-    let type = service.getTypes('Contract-1');
+    let types = service.getTypes('Contract-1');
 
-    console.log("MASTER SERVICE",type)
-    expect(type.length).toBe(1);
-    expect(type[0]).toBe("Marine");
-
+    expect(types.length).toBe(1);
+    expect(types[0]).toBe("Marine");
   })
 
-  it(' getCustomer method should returns customer based on type of assetGroup selected',()=>{
+  it(' getTypes method should returns Empty Array of types when we pass Contract-5 (Invalid) Contract ',()=>{
+    service.masterData=mockedMasterData;
+    let types = service.getTypes('Contract-5');
+
+    expect(types.length).toBe(0);
+    expect(types).toEqual([])
+  })
+
+  it(' getCustomer method should returns Customer-1 customer when we pass AssetGroup-1(Valid) assetGroup',()=>{
     service.masterData=mockedMasterData;
     let customer = service.getCustomer("AssetGroup-1");
 
-    console.log("Master Service",customer);
     expect(customer.length).toBe(1);
     expect(customer[0]).toBe('Customer-1');
 
   })
 
-  it('getVesselLength method should return correct length of vessel passed to it',()=>{
+  it(' getCustomer method should returns empty Array when we pass AssetGroup-10(Invalid) assetGroup ',()=>{
+    service.masterData=mockedMasterData;
+    let customer = service.getCustomer("AssetGroup-10");
+
+    expect(customer.length).toBe(0);
+    expect(customer[0]).toEqual([]);
+
+  })
+
+  it('getVesselLength method should return 100 ft  length when we pass Vessel-1 Vessel to it',()=>{
 
     service.masterData = mockedMasterData;
     let VesselLength= service.getVesselLength(mockedMasterData.vessels[0].vessel);
 
     console.log("Master Service",VesselLength);
     expect(VesselLength).toBe('100 ft')
+
+  })
+
+  it('getVesselLength method should return undefined length when we pass Vessel-1 Vessel to it',()=>{
+
+    service.masterData = mockedMasterData;
+    let VesselLength  = service.getVesselLength("Vessel-3");
+
+    console.log("Master Service",VesselLength);
+    expect(VesselLength).toBe('')
 
   })
 

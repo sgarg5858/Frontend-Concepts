@@ -1,5 +1,6 @@
 import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 
+//For providing context to TemplateRef
 class ShowMyContentAfterDelayContext{
   shown:boolean=false;
   counter:number=0;
@@ -51,7 +52,7 @@ export class ShowMyContentAfterDelayDirective implements OnInit {
 
           this.viewContainerRef.clear();
           this.viewContainerRef.createEmbeddedView(this.templateRef,this.context);
-          
+
         },this._delay)
       // }
     }
@@ -68,6 +69,7 @@ export class ShowMyContentAfterDelayDirective implements OnInit {
 
   ngOnInit(): void {
   }
+  //for strict typing
   static ngTemplateContextGuard(dir:ShowMyContentAfterDelayDirective,ctx:unknown):ctx is ShowMyContentAfterDelayContext{
     return true;
   }

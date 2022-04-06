@@ -1,0 +1,28 @@
+{
+  "root": "apps/rxjs-practice-e2e",
+  "sourceRoot": "apps/rxjs-practice-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/rxjs-practice-e2e/cypress.json",
+        "devServerTarget": "rxjs-practice:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "rxjs-practice:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/rxjs-practice-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["rxjs-practice"]
+}

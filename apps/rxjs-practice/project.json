@@ -1,0 +1,104 @@
+{
+  "projectType": "application",
+  "root": "apps/rxjs-practice",
+  "sourceRoot": "apps/rxjs-practice/src",
+  "prefix": "angular-concepts-nx",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/rxjs-practice",
+        "index": "apps/rxjs-practice/src/index.html",
+        "main": "apps/rxjs-practice/src/main.ts",
+        "polyfills": "apps/rxjs-practice/src/polyfills.ts",
+        "tsConfig": "apps/rxjs-practice/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/rxjs-practice/src/favicon.ico",
+          "apps/rxjs-practice/src/assets"
+        ],
+        "styles": ["apps/rxjs-practice/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/rxjs-practice/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/rxjs-practice/src/environments/environment.ts",
+              "with": "apps/rxjs-practice/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/rxjs-practice/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "rxjs-practice:build:production"
+        },
+        "development": {
+          "browserTarget": "rxjs-practice:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4207,
+        "publicHost": "http://localhost:4207"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "rxjs-practice:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/rxjs-practice/src/**/*.ts",
+          "apps/rxjs-practice/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/rxjs-practice"],
+      "options": {
+        "jestConfig": "apps/rxjs-practice/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

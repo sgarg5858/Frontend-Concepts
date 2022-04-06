@@ -31,28 +31,28 @@ describe('ContractService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('getContracts method should return correct contracts based on inputs',()=>{
+  it('getContracts method should return correct contracts based on correct Customer, StartDate and EndDate',()=>{
     
     service.contracts=mockedContracts;
 
     let contractTest1 = service.getContracts('Customer-1',new Date(),new Date());
-    console.log("Contract Service",contractTest1);
     expect(contractTest1.length).toBe(1);
     expect(contractTest1[0]).toBe('Contract-1');
+    
 
     let contractTest2 = service.getContracts('Customer-2',new Date(),new Date());
-    console.log("Contract Service",contractTest2);
 
     expect(contractTest2.length).toBe(1);
     expect(contractTest2[0]).toBe('Contract-2');
   })
 
-  it('getContracts method should return empty array when nothing matches',()=>{
+  it('getContracts method should return empty array when we give provide incorrect Customer, StartDate and EndDate ',()=>{
     
     service.contracts=mockedContracts;
 
     let contractTest1 = service.getContracts('Customer-12',new Date(),new Date());
-    console.log("Contract Service",contractTest1)
+
+
     expect(contractTest1.length).toBe(0);
 
   })

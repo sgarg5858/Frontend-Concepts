@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import exp = require('constants');
-import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, lastValueFrom, Observable, skip } from 'rxjs';
 import { ContractService } from './contract.service';
 import { MasterDataService } from './master-data.service';
 import { mockedMasterData } from './master-data.service.spec';
@@ -83,66 +83,29 @@ describe('NominationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('getter for assetGroup returns assetGroups',(done)=>{
 
-    service.assetGroup$.subscribe((val:string[])=>{
-      console.log("Assetgroups",val);
-      try {
-        expect(val.length).toBe(3);
-        expect(val).toEqual(mockedMasterData.assetGroup);
-        done();
-      } catch (error) {
-        done(error);
-      }
-    })
-  })
+  it('filter types method should push the correct [Marine] types via behavior subject when we pass correct contract Contract-1 ',(done)=>{
 
-
-  it('getter for vessels returns vessels',(done)=>{
-    service.vessels$.subscribe((val:string[])=>{
-      console.log("Vessels",val);
-     try {
-      expect(val.length).toBe(2);
-      done();
-     } catch (error) {
-       done(error);
-     }
-    })
-  })
-
-
-  it('getVesselLength returns correct vessel length',()=>{
-    
-    let length = service.getVesselLength('Vessel-1');
-    expect(length).toBe('100 ft');
-     length = service.getVesselLength('Vessel-3');
-    expect(length).toBe("");
-  })
-
-  it('filter types method when passed Valid Contract',(done)=>{
-
+    //Then call the method
     service.filterTypes('Contract-1');
 
+    //First Subscribe
     service.types$.subscribe((types:string[])=>{
       console.log("Valid Contract",types)
       try {
-        expect(types.length).toBeGreaterThan(0);
         expect(types.length).toBe(1);
         done();
       } catch (error) {
         done(error);
       }
-
     })
-
   })
 
-  it('filter types method when passed Invalid Contract',(done)=>{
+  it('filter types method should push the empty [] types via behavior subject when we pass Wrong contract Contract-5 ',(done)=>{
     
-    service.filterTypes('Contract-4');
+    service.filterTypes('Contract-5');
     
     service.types$.subscribe((types:string[])=>{
-      console.log("Invalid Contract",types)
      
       try {
         expect(types.length).toBe(0);
@@ -154,39 +117,32 @@ describe('NominationService', () => {
     })
   })
 
-  it('Filter Contracts based on Customer- Valid Case ',(done)=>{
+  it('Filter Contracts method should push [Contract-1]  via contractSubject behavior subject when we pass Correct Customer Customer-1, StartDate and End Date ',(done)=>{
     
-    service.filterContracts('Customer-1',new Date(),new Date());
 
-
-    service.contracts.subscribe((contracts:string[])=>{
+    // We can add pipe(skip(1)) to bypass intial value of behavior subject.
+    service.contracts.pipe(skip(1)).subscribe((contracts:string[])=>{
       console.log("Contracts",contracts)
+        try {
+          expect(contracts.length).toBe(1);
+          expect(contracts[0]).toBe('Contract-1');
+        } catch (error) {
+          done(error);
+        }
+    });
 
+    //This will be called later therefore we can done here 
+    service.types$.pipe(skip(1)).subscribe((types:string[])=>{
+      console.log("Valid Contract",types)
       try {
-        
-        expect(contracts.length).toBe(1);
-        expect(contracts[0]).toBe('Contract-1');
-        // done();
-
-        //How to check this one? Is this right way
-
-
-        service.types$.subscribe((types:string[])=>{
-          console.log("Valid Contract",types)
-          try {
-            expect(types.length).toBe(0);
-            done();
-          } catch (error) {
-            done(error);
-          }
-        })
-
-
+        expect(types.length).toBe(0);
+        expect.assertions(3);
+        done();
       } catch (error) {
         done(error);
       }
-
-    });
+    })
+    service.filterContracts('Customer-1',new Date(),new Date());
 
   })
 
@@ -201,22 +157,35 @@ describe('NominationService', () => {
   });
    
 
-  it('Filter Contracts based on Customer- InValid Case ',(done)=>{
+  it('Filter Contracts method should push []  via contractSubject behavior subject when we pass Wrong Customer Customer-10, StartDate and End Date ',(done)=>{
     
-    service.filterContracts('Customer-6',new Date(),new Date());
+    service.filterContracts('Customer-10',new Date(),new Date());
 
-    //Checking Contracts
+    // We can add pipe(skip(1)) to bypass intial value of behavior subject.
     service.contracts.subscribe((contracts:string[])=>{
       console.log("Contracts",contracts)
-     try {
-      expect(contracts.length).toBe(0);
-      done();
-
-     } catch (error) {
-       done(error);
-     }
+        try {
+          expect(contracts.length).toBe(0);
+          expect(contracts).toEqual([]);
+        } catch (error) {
+         done(error); 
+        }
     });
+
+    //This will be called later therefore we can done here 
+    service.types$.subscribe((types:string[])=>{
+      console.log("Valid Contract",types)
+      try {
+        expect(types.length).toBe(0);
+        expect.assertions(3);
+        done();
+      } catch (error) {
+        done(error);
+      }
+    })
+
   })
+
 
   it('Filter Contracts based on Customer- InValid Case  -Promise Way',async ()=>{
     
@@ -225,40 +194,100 @@ describe('NominationService', () => {
     await expect(firstValueFrom(service.contracts)).resolves.toEqual([]);
     });
 
-  it('Filter Customers based on AssetGroups- Valid Case ',(done)=>{
+  it('Filter Customers method should push [Customer-1] via customerSubject when we pass Correct AssetGroup-1 to it. ',(done)=>{
     
     service.filterCustomers('AssetGroup-1');
 
-    //if we have to do multiple observables testing then we have to nest observables as we have to call 
-    // done() when we are done testing our all observables 
-    // check the approach where we convert the observable to promise and so easy to test..
     service.customers$.subscribe((customers:string[])=>{
       console.log("Customers",customers)
       try {
         expect(customers.length).toBe(1);
-        done();
+        expect(customers).toEqual(['Customer-1'])
       } catch (error) {
         done(error);   
       }
     });
+
+     service.contracts.subscribe((contracts:string[])=>{
+      console.log("Contracts",contracts)
+        try {
+          expect(contracts.length).toBe(0);
+          expect(contracts).toEqual([]);
+        } catch (error) {
+          done(error);
+        }
+    });
+
+    //This will be called later therefore we can done here 
+    service.types$.subscribe((types:string[])=>{
+      console.log("Valid Contract",types)
+      try {
+        expect(types.length).toBe(0);
+        expect.assertions(5);
+        done();
+      } catch (error) {
+        done(error);
+      }
+    })
+
+  })
+
+  
+
+  it('Filter Customers method should push [] via customerSubject when we pass Invalid AssetGroup-10 to it. ',(done)=>{
+    
+    service.filterCustomers('AssetGroup-10');
+
+    service.customers$.subscribe((customers:string[])=>{
+      console.log("Customers",customers)
+      try {
+        expect(customers.length).toBe(0);
+        expect(customers).toEqual([])
+      } catch (error) {
+        done(error);   
+      }
+    });
+
+     service.contracts.subscribe((contracts:string[])=>{
+      console.log("Contracts",contracts)
+        try {
+          expect(contracts.length).toBe(0);
+          expect(contracts).toEqual([]);
+        } catch (error) {
+          done(error);
+        }
+    });
+
+    //This will be called later therefore we can done here 
+    service.types$.subscribe((types:string[])=>{
+      console.log("Valid Contract",types)
+      try {
+        expect(types.length).toBe(0);
+        expect.assertions(5);
+        done();
+      } catch (error) {
+        done(error);
+      }
+    })
+
   })
 
   //Use this approach to test observables ....
 
-  it('Filter Customers based on AssetGroups- Valid Case Promise way ',async()=>{
+//   it('Filter Customers based on AssetGroups- Valid Case Promise way ',async()=>{
     
-    service.filterCustomers('AssetGroup-1');
+//     service.filterCustomers('AssetGroup-1');
 
-    await expect(firstValueFrom(service.customers$)).resolves.toEqual(['Customer-1']);
+//     await expect(firstValueFrom(service.customers$)).resolves.toEqual(['Customer-1']);
 
-    await firstValueFrom(service.customers$).then((customers:string[])=>{
-      expect(customers).toEqual(['Customer-1']);
-      expect(customers.length).toBe(1);
-    })
+//     await firstValueFrom(service.customers$).then((customers:string[])=>{
+//       expect(customers).toEqual(['Customer-1']);
+//       expect(customers.length).toBe(1);
+//     })
 
-    await expect(firstValueFrom(service.contracts)).resolves.toEqual([]);
-    await expect(firstValueFrom(service.types$)).resolves.toEqual([]);
+//     await expect(firstValueFrom(service.contracts)).resolves.toEqual([]);
+//     await expect(firstValueFrom(service.types$)).resolves.toEqual([]);
 
-  })
+//   })
 
 });

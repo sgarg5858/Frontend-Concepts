@@ -51,6 +51,7 @@ module.exports = {
         'attribute-directives': 'http://localhost:4204/remoteEntry.js',
         'css-grid': 'http://localhost:4205/remoteEntry.js',
         'custom-forms': 'http://localhost:4206/remoteEntry.js',
+        'rxjs-practice': 'http://localhost:4207/remoteEntry.js',
       },
       shared: share({
         '@angular/core': {

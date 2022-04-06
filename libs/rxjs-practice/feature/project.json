@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/rxjs-practice/feature",
+  "sourceRoot": "libs/rxjs-practice/feature/src",
+  "prefix": "angular-concepts-nx",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/rxjs-practice/feature"],
+      "options": {
+        "jestConfig": "libs/rxjs-practice/feature/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/rxjs-practice/feature/src/**/*.ts",
+          "libs/rxjs-practice/feature/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
