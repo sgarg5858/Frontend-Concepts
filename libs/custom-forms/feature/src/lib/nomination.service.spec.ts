@@ -262,9 +262,17 @@ describe('NominationService', () => {
     service.types$.subscribe((types:string[])=>{
       console.log("Valid Contract",types)
       try {
+
         expect(types.length).toBe(0);
+
+        //this makes the end of test.
+        // As we verify 5 assertions are run
+        //We know types$ will emit data in last
+        //and we can call done here only
         expect.assertions(5);
         done();
+
+
       } catch (error) {
         done(error);
       }
