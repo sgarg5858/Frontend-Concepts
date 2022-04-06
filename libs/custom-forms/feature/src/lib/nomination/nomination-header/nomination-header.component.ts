@@ -95,6 +95,23 @@ export class NominationHeaderComponent extends FormGeneratorComponent implements
         this.nominationService.filterContracts(...data);
       });
 
+      //We should add this right to reset values?
+      this.formGroup?.['controls']?.['assetGroup'].valueChanges
+      .subscribe((data) => {
+        console.log("Ressetting Customer Value")
+        this.formGroup.controls?.['customer'].reset();
+      });
+      this.formGroup?.['controls']?.['customer'].valueChanges
+      .subscribe((data) => {
+        console.log("Ressetting Contract Value")
+        this.formGroup.controls?.['contract'].reset();
+      });
+      this.formGroup?.['controls']?.['contract'].valueChanges
+      .subscribe((data) => {
+        console.log("Ressetting Type Value")
+        this.formGroup.controls?.['type'].reset();
+      });
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
