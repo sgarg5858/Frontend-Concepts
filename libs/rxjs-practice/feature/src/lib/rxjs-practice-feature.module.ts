@@ -7,6 +7,7 @@ import { CombineLatestComponent } from './combine-latest/combine-latest.componen
 import { ConcatComponent } from './concat/concat.component';
 import { MergeComponent } from './merge/merge.component';
 import { ZipComponent } from './zip/zip.component';
+import { ErrorHandlingComponent } from './error-handling/error-handling.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -34,6 +35,10 @@ import { ZipComponent } from './zip/zip.component';
           {
             path:'zip',
             component:ZipComponent
+          },
+          {
+            path:'error-handling',
+            component:ErrorHandlingComponent
           }
         ]
       }
@@ -45,7 +50,8 @@ import { ZipComponent } from './zip/zip.component';
     CombineLatestComponent,
     ConcatComponent,
     MergeComponent,
-    ZipComponent
+    ZipComponent,
+    ErrorHandlingComponent
   ],
 })
 export class RxjsPracticeFeatureModule {}

@@ -282,6 +282,7 @@ describe('NominationHeaderComponent', () => {
       try {
         expect(customers.length).toBe(1);
         expect(customers).toEqual(['Customer-2'])
+        expect.assertions(6);
         done();
       } catch (error) {
         done(error);
