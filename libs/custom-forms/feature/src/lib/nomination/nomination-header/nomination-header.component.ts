@@ -99,17 +99,17 @@ export class NominationHeaderComponent extends FormGeneratorComponent implements
       this.formGroup?.['controls']?.['assetGroup'].valueChanges
       .subscribe((data) => {
         console.log("Ressetting Customer Value")
-        this.formGroup.controls?.['customer'].reset();
+        this.formGroup.controls?.['customer'].reset({emitEvent:false});
       });
       this.formGroup?.['controls']?.['customer'].valueChanges
       .subscribe((data) => {
         console.log("Ressetting Contract Value")
-        this.formGroup.controls?.['contract'].reset();
+        this.formGroup.controls?.['contract'].reset({emitEvent:false});
       });
       this.formGroup?.['controls']?.['contract'].valueChanges
       .subscribe((data) => {
         console.log("Ressetting Type Value")
-        this.formGroup.controls?.['type'].reset();
+        this.formGroup.controls?.['type'].reset({emitEvent:false});
       });
 
   }

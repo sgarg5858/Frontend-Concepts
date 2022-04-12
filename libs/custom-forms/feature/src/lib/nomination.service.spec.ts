@@ -94,6 +94,7 @@ describe('NominationService', () => {
       console.log("Valid Contract",types)
       try {
         expect(types.length).toBe(1);
+        expect(types[0]).toBe('Marine')
         done();
       } catch (error) {
         done(error);
@@ -146,16 +147,7 @@ describe('NominationService', () => {
 
   })
 
-  it('Filter Contracts based on Customer- Valid Case Promise Way ',async ()=>{
-    
-    service.filterContracts('Customer-1',new Date(),new Date());
-
-    await expect(firstValueFrom(service.contracts)).resolves.toEqual(['Contract-1']);
-
-    await expect(firstValueFrom(service.types$)).resolves.toEqual([]);
-
-  });
-   
+ 
 
   it('Filter Contracts method should push []  via contractSubject behavior subject when we pass Wrong Customer Customer-10, StartDate and End Date ',(done)=>{
     
@@ -187,12 +179,7 @@ describe('NominationService', () => {
   })
 
 
-  it('Filter Contracts based on Customer- InValid Case  -Promise Way',async ()=>{
-    
-    service.filterContracts('Customer-6',new Date(),new Date());
-
-    await expect(firstValueFrom(service.contracts)).resolves.toEqual([]);
-    });
+ 
 
   it('Filter Customers method should push [Customer-1] via customerSubject when we pass Correct AssetGroup-1 to it. ',(done)=>{
     
@@ -223,6 +210,7 @@ describe('NominationService', () => {
       console.log("Valid Contract",types)
       try {
         expect(types.length).toBe(0);
+        //Here we can done() & check the number of assertions ran in this test.
         expect.assertions(5);
         done();
       } catch (error) {
@@ -299,3 +287,20 @@ describe('NominationService', () => {
 //   })
 
 });
+
+ // it('Filter Contracts based on Customer- Valid Case Promise Way ',async ()=>{
+    
+  //   service.filterContracts('Customer-1',new Date(),new Date());
+
+  //   await expect(firstValueFrom(service.contracts)).resolves.toEqual(['Contract-1']);
+
+  //   await expect(firstValueFrom(service.types$)).resolves.toEqual([]);
+
+  // });
+   
+  // it('Filter Contracts based on Customer- InValid Case  -Promise Way',async ()=>{
+    
+  //   service.filterContracts('Customer-6',new Date(),new Date());
+
+  //   await expect(firstValueFrom(service.contracts)).resolves.toEqual([]);
+  //   });

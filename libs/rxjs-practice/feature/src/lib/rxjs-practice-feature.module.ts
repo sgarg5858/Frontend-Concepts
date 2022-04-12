@@ -8,6 +8,8 @@ import { ConcatComponent } from './concat/concat.component';
 import { MergeComponent } from './merge/merge.component';
 import { ZipComponent } from './zip/zip.component';
 import { ErrorHandlingComponent } from './error-handling/error-handling.component';
+import { TakeUntilComponent } from './take-until/take-until.component';
+import { ObserveOnComponent } from './observe-on/observe-on.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,6 +41,13 @@ import { ErrorHandlingComponent } from './error-handling/error-handling.componen
           {
             path:'error-handling',
             component:ErrorHandlingComponent
+          },
+          {
+            path:'take-until',
+            component:TakeUntilComponent
+          },{
+            path:'observe-on',
+            component:ObserveOnComponent
           }
         ]
       }
@@ -51,7 +60,9 @@ import { ErrorHandlingComponent } from './error-handling/error-handling.componen
     ConcatComponent,
     MergeComponent,
     ZipComponent,
-    ErrorHandlingComponent
+    ErrorHandlingComponent,
+    TakeUntilComponent,
+    ObserveOnComponent
   ],
 })
 export class RxjsPracticeFeatureModule {}

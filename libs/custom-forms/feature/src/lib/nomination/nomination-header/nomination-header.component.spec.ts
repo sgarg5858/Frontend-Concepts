@@ -174,7 +174,6 @@ describe('NominationHeaderComponent', () => {
   it('should create the formGroup instance correctly and should have all our controls',()=>{
 
     const formGroup = fixture.componentInstance.formGroup;
-    console.log(formGroup?.['controls']?.['assetGroup']);
     //Checking our formGroup
     expect(formGroup).toBeDefined();
     expect(Object.keys(formGroup.controls).length).toBe(7);
@@ -185,6 +184,31 @@ describe('NominationHeaderComponent', () => {
     expect(formGroup?.['controls']?.['contract']).toBeDefined();
     expect(formGroup?.['controls']?.['type']).toBeDefined();
     expect(formGroup?.['controls']?.['vessel']).toBeDefined();
+
+  })
+
+  it('valueChanged EventEmitter should emit event whenever the value of any control is updated.',(done)=>{
+    component.valueChanged.pipe(take(1)).
+    subscribe((event:{control:string,value:any})=>{
+      try {
+        expect(event.control).toBe('type');
+        expect(event.value).toBe('Marine');
+        done();
+      } catch (error) {
+        done(error);
+      }
+    })
+    component.formGroup.controls?.['type'].setValue('Marine');
+    fixture.detectChanges();
+
+  })
+
+  it('On getting input vessel it should update the value in the form',()=>{
+    
+    expect(component.formGroup.controls?.['vessel'].value).toBe(null)
+    component.vessel="Vessel-1";
+    fixture.detectChanges();
+   expect(component.formGroup.controls?.['vessel'].value).toBe('Vessel-1')
 
   })
 
@@ -202,6 +226,7 @@ describe('NominationHeaderComponent', () => {
     nominationServiceMock.customers$.subscribe((customers:string[])=>{
       try {
         expect(customers.length).toBe(1);
+        expect(customers[0]).toBe('Customer-1')
         done();
       } catch (error) {
         done(error);
@@ -217,6 +242,7 @@ describe('NominationHeaderComponent', () => {
     component.formGroup.controls?.['endDate'].setValue(new Date());
     fixture.detectChanges();
 
+    //this tests our combineLatest
     expect(nominationServiceMock.filterContracts).toBeCalled();
 
     //checking the value of contrac5 controls
@@ -252,7 +278,7 @@ describe('NominationHeaderComponent', () => {
 
     component.formGroup.controls?.['assetGroup'].setValue('AssetGroup-1');
     fixture.detectChanges();
-
+    //take(1) as we want to run this one for just one time.
     nominationServiceMock.customers$.pipe(take(1)).
     subscribe((customers:string[])=>{
       try {
