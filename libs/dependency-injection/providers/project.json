@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/dependency-injection/providers",
+  "sourceRoot": "libs/dependency-injection/providers/src",
+  "prefix": "angular-concepts-nx",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/dependency-injection/providers"],
+      "options": {
+        "jestConfig": "libs/dependency-injection/providers/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/dependency-injection/providers/src/**/*.ts",
+          "libs/dependency-injection/providers/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

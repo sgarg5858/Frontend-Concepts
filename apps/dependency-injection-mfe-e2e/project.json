@@ -1,0 +1,28 @@
+{
+  "root": "apps/dependency-injection-mfe-e2e",
+  "sourceRoot": "apps/dependency-injection-mfe-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/dependency-injection-mfe-e2e/cypress.json",
+        "devServerTarget": "dependency-injection-mfe:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "dependency-injection-mfe:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/dependency-injection-mfe-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["dependency-injection-mfe"]
+}

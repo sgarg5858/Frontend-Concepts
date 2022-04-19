@@ -6,7 +6,8 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NominationCreatePage3Component } from './nomination-create-page3/nomination-create-page3.component';
-import{HttpClientModule} from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import {REPORTERS,BrowserReporterService,EngagingReporterService, LoggerService} from '@angular-concepts-nx/dependency-injection/feature-resolution-modifiers'
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,11 +61,24 @@ import{HttpClientModule} from '@angular/common/http'
           loadChildren: () =>
             import('rxjs-practice/Module').then((m) => m.RemoteEntryModule),
         },
+        {
+          path: 'dependency-injection-mfe',
+          loadChildren: () =>
+            import('dependency-injection-mfe/Module').then(
+              (m) => m.RemoteEntryModule
+            ),
+        },
       ],
       { initialNavigation: 'enabledBlocking' }
     ),
   ],
-  providers: [],
+  providers: [
+    // BrowserReporterService,
+    // EngagingReporterService,
+    // LoggerService,
+    // {provide:REPORTERS,useExisting:BrowserReporterService,multi:true},
+    // {provide:REPORTERS,useExisting:EngagingReporterService,multi:true}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

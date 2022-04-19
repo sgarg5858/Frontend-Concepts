@@ -103,20 +103,5 @@ describe('NominationCreatePage1Component', () => {
     //We can find Marine details Panel component...
     expect(marineDetailsPanelElement).toBeDefined();
 
-    //Vessel Element is also defined....
-    let vesselElement:Dropdown = debugElement.query(By.css('.marineDetails .item-0 p-dropdown')).componentInstance;
-    expect(vesselElement).toBeDefined();
-
-    //Options are null until we call tick() as async observables wont push data until we call tick()
-    expect(vesselElement.options).toBeNull();
-
-    //tick is required for async observable to emit data;
-    tick();
-    fixture.detectChanges();
-
-    vesselElement = debugElement.query(By.css('.marineDetails .item-0 p-dropdown')).componentInstance;
-
-    console.log(vesselElement.options);
-    expect(vesselElement.options.length).toBe(2);
   }))
 });

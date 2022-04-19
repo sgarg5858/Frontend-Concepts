@@ -52,6 +52,7 @@ module.exports = {
         'css-grid': 'http://localhost:4205/remoteEntry.js',
         'custom-forms': 'http://localhost:4206/remoteEntry.js',
         'rxjs-practice': 'http://localhost:4207/remoteEntry.js',
+        'dependency-injection-mfe': 'http://localhost:4208/remoteEntry.js',
       },
       shared: share({
         '@angular/core': {

@@ -11,3 +11,5 @@ declare module 'css-grid/Module';
 declare module 'custom-forms/Module';
 
 declare module 'rxjs-practice/Module';
+
+declare module 'dependency-injection-mfe/Module';

@@ -104,6 +104,7 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
+          "nx serve dependency-injection-mfe",
           "nx serve rxjs-practice",
           "nx serve custom-forms",
           "nx serve css-grid",

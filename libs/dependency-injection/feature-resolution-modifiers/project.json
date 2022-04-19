@@ -1,0 +1,28 @@
+{
+  "projectType": "library",
+  "root": "libs/dependency-injection/feature-resolution-modifiers",
+  "sourceRoot": "libs/dependency-injection/feature-resolution-modifiers/src",
+  "prefix": "angular-concepts-nx",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/libs/dependency-injection/feature-resolution-modifiers"
+      ],
+      "options": {
+        "jestConfig": "libs/dependency-injection/feature-resolution-modifiers/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/dependency-injection/feature-resolution-modifiers/src/**/*.ts",
+          "libs/dependency-injection/feature-resolution-modifiers/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

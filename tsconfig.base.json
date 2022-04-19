@@ -24,6 +24,18 @@
       "@angular-concepts-nx/custom-forms/feature": [
         "libs/custom-forms/feature/src/index.ts"
       ],
+      "@angular-concepts-nx/dependency-injection/feature-resolution-modifiers": [
+        "libs/dependency-injection/feature-resolution-modifiers/src/index.ts"
+      ],
+      "@angular-concepts-nx/dependency-injection/light-weight-injection-token": [
+        "libs/dependency-injection/light-weight-injection-token/src/index.ts"
+      ],
+      "@angular-concepts-nx/dependency-injection/providers": [
+        "libs/dependency-injection/providers/src/index.ts"
+      ],
+      "@angular-concepts-nx/dependency-injection/view-providers": [
+        "libs/dependency-injection/view-providers/src/index.ts"
+      ],
       "@angular-concepts-nx/reusable-forms-1/data-access": [
         "libs/reusable-forms-1/data-access/src/index.ts"
       ],
